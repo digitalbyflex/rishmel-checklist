@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ru" class="init">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#141312">
+<title>Рис и Хмель — чек-лист для запуска</title>
+<link rel="icon" href="img/icon-dark.png">
+<link rel="preload" href="fonts/golos-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/oswald-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Golos Text';font-style:normal;font-weight:400 700;font-display:block;src:url(fonts/golos-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Golos Text';font-style:normal;font-weight:400 700;font-display:block;src:url(fonts/golos-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Golos Text';font-style:normal;font-weight:400 700;font-display:block;src:url(fonts/golos-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4}
+@font-face{font-family:'Oswald';font-style:normal;font-weight:600;font-display:block;src:url(fonts/oswald-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Oswald';font-style:normal;font-weight:600;font-display:block;src:url(fonts/oswald-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+:root{
+  --ink:#141312; --cream:#F2EDE4; --paper:#FBF8F3; --line:#E4DCCD; --row:#EDE6DA;
+  --muted:#6A6359; --text2:#4E4840; --amber:#E9A13B; --amber-ink:#A25F0E;
+  --total:32; --n:0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--cream);-webkit-text-size-adjust:100%;touch-action:pan-x pan-y}
+body{font-family:'Golos Text',system-ui,-apple-system,sans-serif;color:var(--ink);font-size:15px;line-height:1.42;
+  padding-bottom:calc(92px + env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* появление страницы */
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hero .wrap,.main>*{animation:rise .3s ease-out backwards}
+.main>*:nth-child(2){animation-delay:.04s}.main>*:nth-child(3){animation-delay:.08s}
+.main>*:nth-child(4){animation-delay:.12s}.main>*:nth-child(5){animation-delay:.16s}
+html.init *{transition:none!important}
+
+.hero{background:var(--ink);color:var(--cream);padding:calc(22px + env(safe-area-inset-top)) 16px 24px}
+.wrap{max-width:600px;margin:0 auto}
+.hero .logo{width:76px;height:auto;display:block;margin-bottom:14px}
+.kicker{font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber)}
+h1{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:34px;line-height:1.05;margin:6px 0 10px}
+.sub{color:#D3CBBF;font-size:15px}
+
+.main{max-width:600px;margin:0 auto;padding:16px 16px 0}
+.note{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14px;color:var(--text2);margin-bottom:14px}
+.note b{color:var(--ink);font-weight:600}
+
+.sec{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 14px 6px;margin-bottom:14px}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+h2{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:20px;line-height:1.15;flex:1}
+.tag{font-weight:700;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px 3px;border-radius:99px;white-space:nowrap}
+.tag.now{background:var(--amber);color:var(--ink)}
+.tag.demo{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tag.later{background:#E3DACA;color:#4A453E}
+.tag.you{background:var(--ink);color:var(--cream)}
+.sec-note{font-size:13.5px;color:var(--amber-ink);font-weight:500;margin:2px 0 4px}
+.sec-note.plain{color:var(--muted);font-weight:400}
+
+.items{list-style:none}
+.item{border-top:1px solid var(--row);padding:4px 0 8px}
+.item:first-child{border-top:0}
+.row{display:grid;grid-template-columns:34px 1fr;align-items:start;width:100%;text-align:left;padding:8px 0 2px;border-radius:10px}
+.box{width:24px;height:24px;border:2px solid var(--ink);border-radius:7px;background:#fff;display:grid;place-items:center;margin-top:1px;
+  transition:background .2s ease,border-color .2s ease,transform .18s ease}
+.box svg{width:16px;height:16px;fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.6);transition:opacity .18s ease,transform .18s ease}
+.item.done .box{background:var(--amber);border-color:var(--amber)}
+.item.done .box svg{opacity:1;transform:none}
+.row:active .box{transform:scale(.92)}
+.t{display:block;font-weight:600;font-size:15.5px;line-height:1.3}
+.d{display:block;color:var(--text2);font-size:14px;margin-top:2px;transition:opacity .2s ease}
+.item.done .d{opacity:.62}
+.ans{display:block;width:calc(100% - 34px);margin:6px 0 2px 34px;font:inherit;font-size:16px;color:var(--ink);background:#fff;
+  border:1px solid var(--line);border-radius:10px;padding:9px 11px;outline:none;transition:border-color .2s ease,box-shadow .2s ease;resize:none}
+.ans::placeholder{color:#A39B8F}
+.ans:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(233,161,59,.22)}
+textarea.ans{min-height:64px}
+
+.steps .row{grid-template-columns:34px 1fr}
+
+.safe{background:var(--ink);color:#DAD3C8;border-radius:16px;padding:16px;margin-bottom:14px;display:grid;gap:12px;font-size:14px}
+.safe b{display:block;color:var(--amber);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:3px}
+
+.foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 2px 18px;color:var(--muted)}
+.sign{display:flex;align-items:center;gap:10px;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8D857A}
+.sign img{height:24px;width:auto;display:block}
+.link{font-size:13px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:6px 0}
+
+/* нижняя панель */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;background:rgba(242,237,228,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .in{max-width:600px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.prog{flex:1;min-width:0;counter-reset:done var(--n)}
+.ptxt{font-size:13.5px;color:var(--text2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cnt::before{content:counter(done)}
+.ptxt b{color:var(--ink);font-weight:700;display:inline-block;min-width:1.2em;text-align:right}
+.track{height:6px;border-radius:9px;background:#E3DACA;margin-top:6px;overflow:hidden}
+.track i{display:block;height:100%;width:calc(var(--n) * 100% / var(--total));background:var(--amber);border-radius:9px;transition:width .35s ease}
+.btn{flex:none;width:176px;height:46px;border-radius:12px;background:var(--ink);color:var(--cream);font-weight:600;font-size:15px;
+  transition:transform .12s ease,opacity .2s ease}
+.btn:active{transform:scale(.98)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom));transform:translate(-50%,8px);background:var(--ink);color:var(--cream);
+  font-size:14px;padding:10px 14px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;white-space:nowrap;z-index:6}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+#hap{position:fixed;left:-200px;top:-200px;opacity:0;pointer-events:none}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+@media (max-width:370px){ .btn{width:150px;font-size:14px} h1{font-size:30px} }
+</style>
+<script>
+/* отметки — до первой отрисовки, чтобы ничего не мигало */
+(function(){
+  var n=0, css='';
+  try{
+    var st=JSON.parse(localStorage.getItem('rishmel-checklist-v1')||'{}'), d=st.done||{};
+    for(var k in d){ if(d[k] && /^[a-z0-9-]+$/.test(k)){ n++;
+      css+='[data-id="'+k+'"] .box{background:#E9A13B;border-color:#E9A13B}[data-id="'+k+'"] .box svg{opacity:1;transform:none}[data-id="'+k+'"] .d{opacity:.62}'; } }
+    if(css) document.write('<style id="pre">'+css+'</style>');
+  }catch(e){}
+  document.documentElement.style.setProperty('--n', n);
+})();
+</script>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="img/logo.png" alt="Рис и Хмель" width="320" height="323">
+    <div class="kicker">Чек-лист для запуска</div>
+    <h1>Что нужно от вас</h1>
+    <p class="sub">Домен, сервер, онлайн-оплату, кассу для сайта, бота и SMS регистрирую и настраиваю сам — всё оформляю на вас. Отмечайте, что уже прислали: отметки сохраняются на этом телефоне.</p>
+  </div>
+</header>
+
+<main class="main">
+  <p class="note"><b>Как пользоваться.</b> Нажмите на пункт, чтобы отметить. Где есть поле — впишите ответ, а внизу нажмите «Отправить ответы». Файлы — меню, фото, скриншоты — присылайте прямо в наш чат в Telegram.</p>
+
+  <section class="sec">
+    <div class="sec-head"><h2>Данные для регистрации</h2><span class="tag now">Сразу</span></div>
+    <ul class="items">
+      <li class="item" data-id="inn"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">ИНН</span><span class="d">По нему сам получу выписку из налоговой со всеми реквизитами для документов на сайте.</span></span></button>
+        <input class="ans" type="text" inputmode="numeric" placeholder="10 или 12 цифр" autocomplete="off"></li>
+      <li class="item" data-id="tax"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Система налогообложения и ставка НДС</span><span class="d">Нужна для кассовых чеков. Можно спросить у бухгалтера.</span></span></button>
+        <input class="ans" type="text" placeholder="например, УСН 6 %, без НДС" autocomplete="off"></li>
+      <li class="item" data-id="addr"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Адрес кафе и часы работы</span><span class="d">И до скольких принимаем заказы на доставку и самовывоз.</span></span></button>
+        <input class="ans" type="text" placeholder="адрес, часы работы" autocomplete="off"></li>
+      <li class="item" data-id="contacts"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Телефон и e-mail для гостей</span><span class="d">Покажу на сайте и в боте.</span></span></button>
+        <input class="ans" type="text" placeholder="телефон, e-mail" autocomplete="off"></li>
+      <li class="item" data-id="tg"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Ваш Telegram</span><span class="d">Владельцем бота и группы заказов будете вы.</span></span></button>
+        <input class="ans" type="text" placeholder="@имя" autocomplete="off" autocapitalize="off"></li>
+      <li class="item" data-id="mail"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Почта для сервисов</span><span class="d">На неё зарегистрирую домен, сервер, SMS-сервис и кассу. Лучше отдельный ящик кафе: заведу сам, для подтверждения понадобится ваш номер телефона.</span></span></button>
+        <input class="ans" type="text" placeholder="готовая почта или «заведи»" autocomplete="off" autocapitalize="off"></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>Банк, оплата и касса</h2><span class="tag now">Сразу</span></div>
+    <p class="sec-note">Оплата картой на сайте — это покупка в кафе, а не перевод: подходит и для кредитных карт.</p>
+    <ul class="items">
+      <li class="item" data-id="bank"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Банк, где счёт и терминал кафе</span><span class="d">Проверю, есть ли там онлайн-оплата картой и сколько она стоит. Если не подойдёт — предложу, где подключить выгоднее.</span></span></button>
+        <input class="ans" type="text" placeholder="название банка" autocomplete="off"></li>
+      <li class="item" data-id="rate"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Ставка по терминалу</span><span class="d">Какой процент банк берёт сейчас — для сравнения.</span></span></button>
+        <input class="ans" type="text" inputmode="decimal" placeholder="например, 1,8 %" autocomplete="off"></li>
+      <li class="item" data-id="turnover"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Оборот по картам в месяц и средний чек</span><span class="d">Примерно: банк спрашивает это в заявке.</span></span></button>
+        <input class="ans" type="text" placeholder="например, 600 тыс. ₽, чек 900 ₽" autocomplete="off"></li>
+      <li class="item" data-id="kassa"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Касса в кафе</span><span class="d">Модель (Эвотор, АТОЛ и т. п.) и оператор фискальных данных (ОФД). На каждую онлайн-оплату по закону нужен чек — подберу для сайта самый простой вариант.</span></span></button>
+        <input class="ans" type="text" placeholder="модель кассы, ОФД" autocomplete="off"></li>
+      <li class="item" data-id="kep"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Электронная подпись для налоговой (КЭП)</span><span class="d">Есть ли и до какого числа действует. Скорее всего понадобится, чтобы зарегистрировать кассу для сайта. Если нет — подскажу, как бесплатно получить в налоговой.</span></span></button>
+        <input class="ans" type="text" placeholder="есть, до … / нет" autocomplete="off"></li>
+      <li class="item" data-id="gosuslugi"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Подтверждённая учётная запись на Госуслугах</span><span class="d">С 1 сентября 2026 года домен .ru регистрируется только с подтверждением через Госуслуги владельца.</span></span></button>
+        <input class="ans" type="text" placeholder="есть / нет" autocomplete="off"></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>Для демо</h2><span class="tag demo">Для демо</span></div>
+    <p class="sec-note plain">В ближайшие 2–3 дня.</p>
+    <ul class="items">
+      <li class="item" data-id="menu"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Меню в любом виде</span><span class="d">Фото, PDF, таблица или выгрузка из кассы: названия, цены, вес или объём, описания. Пришлите в чат — для демо возьму базовые позиции, остальное заполните сами в админке.</span></span></button></li>
+      <li class="item" data-id="photos"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Фото блюд, витрины и кафе</span><span class="d">Если есть. Если нет — подберу фото для категорий и базовых позиций.</span></span></button></li>
+      <li class="item" data-id="brand"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Фирменные цвета и шрифты</span><span class="d">Если есть. Логотип у меня уже есть.</span></span></button></li>
+      <li class="item" data-id="delivery"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Доставка</span><span class="d">Куда возите (районы или радиус), стоимость, минимальная сумма заказа, с какой суммы бесплатно, сколько едет заказ, кто возит: свои курьеры или такси.</span></span></button>
+        <textarea class="ans" rows="2" placeholder="районы, цены, минимальный заказ, время"></textarea></li>
+      <li class="item" data-id="pickup"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Самовывоз и предзаказ</span><span class="d">Сколько готовится заказ и на сколько дней вперёд принимать предзаказ.</span></span></button>
+        <input class="ans" type="text" placeholder="например, 25 минут, на 2 дня вперёд" autocomplete="off"></li>
+      <li class="item" data-id="domain"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Адрес сайта</span><span class="d">2–3 желаемых варианта, или доверьте мне: подберу свободный.</span></span></button>
+        <input class="ans" type="text" placeholder="например, risihmel.ru" autocomplete="off" autocapitalize="off"></li>
+      <li class="item" data-id="botname"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Имя бота в Telegram</span><span class="d">Например, @risihmel_bot.</span></span></button>
+        <input class="ans" type="text" placeholder="@…_bot" autocomplete="off" autocapitalize="off"></li>
+      <li class="item" data-id="staff"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Кто получает заказы</span><span class="d">Telegram сотрудников для группы заказов и номер администратора для SMS на случай, если пропадёт интернет.</span></span></button>
+        <textarea class="ans" rows="2" placeholder="@сотрудники, номер администратора"></textarea></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>До запуска</h2><span class="tag later">До запуска</span></div>
+    <ul class="items">
+      <li class="item" data-id="loyalty"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Правила баллов</span><span class="d">Черновик из договора: начисляем 5&nbsp;% от заказа, баллами можно оплатить до&nbsp;30&nbsp;%, баллы живут 6&nbsp;месяцев, на пиво не начисляются. Подтвердите или поправьте.</span></span></button>
+        <input class="ans" type="text" placeholder="ок / что поменять" autocomplete="off"></li>
+      <li class="item" data-id="promos"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Акции на старте</span><span class="d">Какие включаем первыми: подарок к заказу, «1+1» или другие.</span></span></button>
+        <input class="ans" type="text" placeholder="какие акции" autocomplete="off"></li>
+      <li class="item" data-id="policy"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Политика обработки данных и согласие гостей</span><span class="d">Пришлю шаблон, вы утверждаете. Лучше показать юристу.</span></span></button></li>
+      <li class="item" data-id="dpo"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Ответственный за данные гостей</span><span class="d">ФИО: нужно для политики и уведомления в Роскомнадзор.</span></span></button>
+        <input class="ans" type="text" placeholder="ФИО" autocomplete="off"></li>
+      <li class="item" data-id="lawyer"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Ответ юриста по доставке пива</span><span class="d">До того, как включим эту функцию.</span></span></button></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>Что сделаете вы сами</h2><span class="tag you">Ваши шаги</span></div>
+    <p class="sec-note plain">Около 30 минут. Удобнее за одну встречу или созвон — подскажу каждый шаг.</p>
+    <ul class="items steps">
+      <li class="item" data-id="step-gos"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Войдёте через Госуслуги у регистратора</span><span class="d">Подтвердите, что домен ваш.</span></span></button></li>
+      <li class="item" data-id="step-bank"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Подпишете заявку на онлайн-оплату</span><span class="d">В приложении банка — заполню её заранее.</span></span></button></li>
+      <li class="item" data-id="step-kassa"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Подпишете регистрацию кассы для сайта</span><span class="d">Электронной подписью или в приложении банка.</span></span></button></li>
+      <li class="item" data-id="step-bot"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Создадите Telegram-бота со своего аккаунта</span><span class="d">3&nbsp;минуты, покажу как.</span></span></button></li>
+      <li class="item" data-id="step-rkn"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Отправите уведомление в Роскомнадзор</span><span class="d">Об обработке данных гостей. Заполню сам, вы отправите со входом через Госуслуги.</span></span></button></li>
+      <li class="item" data-id="step-pay"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Оплатите сервисы по ссылкам</span><span class="d">Сервер и домен — около 500–1&nbsp;000&nbsp;₽ в&nbsp;месяц, SMS — 4–7&nbsp;₽ за&nbsp;сообщение. Платежи идут напрямую сервисам.</span></span></button></li>
+      <li class="item" data-id="step-codes"><button class="row" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7.2"/></svg></span><span><span class="t">Будете на связи, пока регистрирую сервисы</span><span class="d">На ваш телефон придут коды от почты, сервера и SMS-сервиса — их можно переслать мне.</span></span></button></li>
+    </ul>
+  </section>
+
+  <div class="safe">
+    <p><b>Безопасность</b>Пароли и коды от банка и Госуслуг не пересылайте никому — даже мне. Эти шаги подтверждаете только вы, я подскажу, куда нажать.</p>
+    <p><b>Всё ваше</b>Домен, сервер, бот, банк и SMS-сервис оформляю на вас. Система и база гостей принадлежат вам.</p>
+  </div>
+
+  <footer class="foot">
+    <div class="sign"><span>Разработка и запуск</span><img src="img/vilisov-dark.png" alt="Вилисов" width="300" height="118"></div>
+    <button class="link" id="reset" type="button">Сбросить отметки</button>
+  </footer>
+</main>
+
+<div class="bar">
+  <div class="in">
+    <div class="prog" aria-live="polite"><div class="ptxt">Готово <b class="cnt"></b> из 32</div><div class="track"><i></i></div></div>
+    <button class="btn" id="send" type="button">Отправить ответы</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<label id="hap" aria-hidden="true"><input type="checkbox" switch tabindex="-1"></label>
+
+<script>
+(function(){
+  var KEY='rishmel-checklist-v1', TOTAL=32, root=document.documentElement;
+  var st={done:{},ans:{}};
+  try{ var p=JSON.parse(localStorage.getItem(KEY)||'{}'); st.done=p.done||{}; st.ans=p.ans||{}; }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  var items=[].slice.call(document.querySelectorAll('.item'));
+  var hap=document.getElementById('hap');
+  function haptic(){ try{ hap.click(); }catch(e){} }
+  function count(){ var n=0; items.forEach(function(li){ if(st.done[li.dataset.id]) n++; }); root.style.setProperty('--n', n); return n; }
+  function setDone(li, on){ var id=li.dataset.id; if(on) st.done[id]=true; else delete st.done[id];
+    li.classList.toggle('done', on); li.querySelector('.row').setAttribute('aria-pressed', on?'true':'false'); }
+
+  items.forEach(function(li){
+    var id=li.dataset.id, row=li.querySelector('.row'), ans=li.querySelector('.ans');
+    setDone(li, !!st.done[id]);
+    if(ans && st.ans[id]) ans.value=st.ans[id];
+    row.addEventListener('click', function(){ haptic(); setDone(li, !st.done[id]); count(); save(); });
+    if(ans) ans.addEventListener('input', function(){
+      var v=ans.value; if(v.trim()){ st.ans[id]=v; if(!st.done[id]){ setDone(li, true); count(); } } else { delete st.ans[id]; }
+      save(); });
+  });
+  count();
+  var pre=document.getElementById('pre'); if(pre) pre.parentNode.removeChild(pre);
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ root.classList.remove('init'); }); });
+
+  var toastEl=document.getElementById('toast'), tt;
+  function toast(msg){ toastEl.textContent=msg; toastEl.classList.add('on'); clearTimeout(tt); tt=setTimeout(function(){ toastEl.classList.remove('on'); }, 2600); }
+
+  function buildText(){
+    var n=count(), lines=['Рис и Хмель — чек-лист: готово '+n+' из '+TOTAL,''];
+    items.forEach(function(li){ var id=li.dataset.id; if(!st.done[id]) return;
+      var a=(st.ans[id]||'').trim().replace(/\s*\n\s*/g,'; ');
+      lines.push('✅ '+li.querySelector('.t').textContent+(a?': '+a:'')); });
+    if(n<TOTAL){ lines.push(''); lines.push('Осталось пунктов: '+(TOTAL-n)); }
+    return lines.join('\n');
+  }
+  document.getElementById('send').addEventListener('click', function(){
+    haptic();
+    var text=buildText(), page=location.href.split('#')[0];
+    function viaTelegram(){
+      try{ if(navigator.clipboard) navigator.clipboard.writeText(text); }catch(e){}
+      location.href='https://t.me/share/url?url='+encodeURIComponent(page)+'&text='+encodeURIComponent(text);
+    }
+    if(navigator.share){ navigator.share({text:text}).catch(function(e){ if(!e || e.name!=='AbortError') viaTelegram(); }); }
+    else viaTelegram();
+  });
+  document.getElementById('reset').addEventListener('click', function(){
+    if(confirm('Сбросить все отметки и ответы на этом телефоне?')){ st={done:{},ans:{}}; save();
+      items.forEach(function(li){ setDone(li,false); var a=li.querySelector('.ans'); if(a) a.value=''; }); count(); save(); toast('Отметки сброшены'); }
+  });
+  /* :active на iPhone и запрет масштабирования жестом */
+  document.addEventListener('touchstart', function(){}, {passive:true});
+  ['gesturestart','gesturechange'].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }, {passive:false}); });
+})();
+</script>
+</body>
+</html>
